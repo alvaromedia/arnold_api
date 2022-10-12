@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Create a write stream
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
@@ -23,7 +24,19 @@ app.get('/', (req, res) => {
 
 // Movie routes
 const movieRoutes = require('./routes/movieRoutes');
-app.use('/movies', movieRoutes);
+app.use('/api/movies', movieRoutes);
+
+// user routes
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/users', userRoutes);
+
+// director routes
+const directorRoutes = require('./routes/directorRoutes');
+app.use('/api/directors', directorRoutes);
+
+// genre routes
+const genreRoutes = require('./routes/genreRoutes');
+app.use('/api/genres', genreRoutes);
 
 // Error handler middleware
 app.use((err, req, res, next) => {

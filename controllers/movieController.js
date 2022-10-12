@@ -1,5 +1,12 @@
-const movies = require('../movies.js');
 const { v4: uuidv4 } = require('uuid');
+
+const movies = [
+  { title: 'Movie 1' },
+  { title: 'Harry Potter' },
+  { title: 'Caperucita roja' },
+  { title: 'Some wonderful story' },
+  { title: 'Fish in the yellow sea' },
+];
 
 /**
  * @desc get all movies
@@ -15,9 +22,32 @@ const getAllMovies = (req, res, next) => {
  * @route POST /movies
  * @access public (for now)
  */
-const createMovie = (req, res) => {
-  const post = { id: uuidv4(), ...req.body };
-  res.json(post);
+const addMovie = (req, res) => {
+  const newMovie = { id: uuidv4(), ...req.body };
+  movies.push(newMovie);
+  res.json(newMovie);
 };
 
-module.exports = { getAllMovies, createMovie };
+/**
+ * @desc find a single movie by ID
+ * @route /movies/:id
+ * @access public (for now)
+ */
+const findMovie = (req, res) => {
+  const { id } = req.params;
+  const found = movies.find((movie) => movie.title === id);
+  res.json(found);
+};
+
+/**
+ * @desc find a single movie by ID
+ * @route /movies/:id
+ * @access public (for now)
+ */
+const deleteMovie = (req, res) => {
+  const { id } = req.params;
+  const deletedMovie = movies.filter((movie) => movie.id === id);
+  res.json(deletedMovie);
+};
+
+module.exports = { getAllMovies, addMovie, findMovie, deleteMovie };
