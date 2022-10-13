@@ -1,13 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.status(200).json({ message: 'this should be the main directors page' });
+const Directors = require('../models/directorModel');
+
+router.get('/', async (req, res) => {
+  const allDirectors = await Directors.find({});
+  res.status(200).json(allDirectors);
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  res.status(200).json({ message: 'single director info', id: id });
+  const singleDirector = await Directors.findOne({ _id: id });
+  res.status(200).json(singleDirector);
 });
 
 module.exports = router;

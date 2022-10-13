@@ -1,13 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.status(200).json({ message: 'global genre routes' });
+const Genres = require('../models/genreModel');
+
+router.get('/', async (req, res) => {
+  const allGenres = await Genres.find({});
+  res.status(200).json(allGenres);
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  res.status(200).json({ message: 'single genre page', id: id });
+  const singleGenre = await Genres.findOne({ _id: id });
+  res.status(200).json(singleGenre);
 });
 
 module.exports = router;

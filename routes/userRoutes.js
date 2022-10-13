@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const { registerUser } = require('../controllers/userControllers');
 
-router.post('/', (req, res) => {
-  const newUser = req.body;
-  res.json(newUser);
-});
+router.post('/', registerUser);
 
 router.post('/login', (req, res) => {
   // check if user already exists
@@ -26,13 +24,13 @@ router.delete('/:id', (req, res) => {
 router.post('/:id/:movieID', (req, res) => {
   // logic here
   const { id, movieID } = req.params;
-  res.status(200).json({ message: 'post to favourite movies', id, movieID });
+  res.status(200).json({ message: 'post to favorite movies', id, movieID });
 });
 
 router.delete('/:id/:movieID', (req, res) => {
   // logic here
   const { id, movieID } = req.params;
-  res.status(200).json({ message: 'delete favourite movies', id, movieID });
+  res.status(200).json({ message: 'delete favorite movies', id, movieID });
 });
 
 module.exports = router;

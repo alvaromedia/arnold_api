@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+require('dotenv').config();
+const PORT = process.env.PORT || 3000;
+
+const mongoose = require('mongoose');
 
 const fs = require('fs');
 const path = require('path');
@@ -44,6 +48,19 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message });
 });
 
-app.listen(4000, () => {
-  console.log('Server listening on port 4000');
-});
+// Connect to database
+const connectDB = async () => {
+  try {
+    const connection = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB connected ${connection.connection.host}`);
+
+    app.listen(PORT, () => {
+      console.log(`App listening on port ${PORT}`);
+    });
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
+
+connectDB();
