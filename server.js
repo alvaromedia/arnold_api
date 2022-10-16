@@ -22,6 +22,7 @@ app.use(morgan('common', { stream: accessLogStream }));
 // serve static files
 app.use(express.static('public', { extensions: ['html'] }));
 
+// homepage route
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Alrighty, this is the main page' });
 });
@@ -43,10 +44,8 @@ const genreRoutes = require('./routes/genreRoutes');
 app.use('/api/genres', genreRoutes);
 
 // Error handler middleware
-app.use((err, req, res, next) => {
-  console.log(err.stack);
-  res.status(500).json({ error: err.message });
-});
+const errorHandler = require('./middleware/errorHandler');
+app.use(errorHandler);
 
 // Connect to database
 const connectDB = async () => {

@@ -1,5 +1,5 @@
-const Movies = require('../models/movieModel');
 const mongoose = require('mongoose');
+const Movies = require('../models/movieModel');
 
 /**
  * @desc get all movies
@@ -7,9 +7,12 @@ const mongoose = require('mongoose');
  * @access public (for now)
  */
 const getAllMovies = async (req, res) => {
-  const allMovies = await Movies.find({});
-
-  res.status(200).json(allMovies);
+  try {
+    const allMovies = await Movies.find({});
+    res.status(200).json(allMovies);
+  } catch (error) {
+    res.json({ error: error.message });
+  }
 };
 
 /**

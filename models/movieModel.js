@@ -9,16 +9,18 @@ const movieSchema = new mongoose.Schema({
   },
   genre: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'Genres',
   },
   director: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'Directors',
   },
   actors: {
-    type: Array,
+    type: [{ type: String }],
   },
   imageUrl: {
     type: String,
   },
 });
 
-module.exports = mongoose.model('Movies', movieSchema);
+module.exports = mongoose.model('Movie', movieSchema);

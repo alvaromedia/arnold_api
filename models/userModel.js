@@ -16,6 +16,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please add a password'],
     },
+    birthday: {
+      type: Date,
+    },
+    favoriteMovies: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movies' }],
+    },
   },
   { timestamps: true }
 );
