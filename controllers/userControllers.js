@@ -1,4 +1,6 @@
 const User = require('../models/userModel');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 /**
  * @desc register a new user
@@ -12,11 +14,15 @@ const registerUser = async (req, res) => {
     return res.status(400).json({ error: 'User already exists' });
   }
 
+  // firstly we hash the password before storing it in the database
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
   try {
     // create the user in the database
     const newUser = await User.create({
       name: req.body.name,
-      password: req.body.password,
+      password: hashedPassword, // we save the hashed password
       email: req.body.email,
     });
     res.status(201).json(newUser);
@@ -30,8 +36,33 @@ const registerUser = async (req, res) => {
  * @route /api/users/login
  * @access public
  */
-const loginUser = (req, res) => {
-  res.json({ message: 'hello there' });
+const loginUser = async (req, res) => {
+  const user = await User.findOne({ name: req.body.name });
+  if (!user) {
+    return res.status(400).json({ error: 'User does not exist' });
+  }
+
+  try {
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+    if (!validPassword) {
+      res.status(400).json({ error: 'Invalid password' });
+    }
+
+    const token = jwt.sign(
+      { payload_id: user._id },
+      process.env.JWT_SECRET_TOKEN,
+      {
+        expiresIn: '7d',
+      }
+    );
+
+    res.json({ message: 'Logged in successfully', token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 /**
