@@ -26,7 +26,7 @@ const registerUser = async (req, res) => {
 };
 
 /**
- * @desc login the user
+ * @desc login an existing user
  * @route /api/users/login
  * @access public
  */
@@ -35,8 +35,8 @@ const loginUser = (req, res) => {
 };
 
 /**
- * @desc login the user
- * @route /api/users/:id
+ * @desc get user's profile
+ * @route GET /api/users/:id
  * @access private
  */
 const profile = async (req, res) => {
@@ -51,8 +51,8 @@ const profile = async (req, res) => {
 };
 
 /**
- * @desc login the user
- * @route /api/users/:id
+ * @desc update user's info
+ * @route PUT /api/users/:id
  * @access private
  */
 const updateUser = async (req, res) => {
@@ -67,8 +67,8 @@ const updateUser = async (req, res) => {
 };
 
 /**
- * @desc login the user
- * @route /api/users/:id
+ * @desc delete a user
+ * @route DELETE /api/users/:id
  * @access private
  */
 const deleteUser = async (req, res) => {
@@ -80,4 +80,46 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser, profile, updateUser, deleteUser };
+/**
+ * @desc add movie to favorites list
+ * @route POST /api/users/movies/:id
+ * @access private
+ */
+const addToFavorites = async (req, res) => {
+  // logic here
+  const { id, movieID } = req.params;
+
+  const user = await User.findOneAndUpdate(
+    { name: id },
+    { $push: { favoriteMovies: movieID } }
+  ); // ! change later
+
+  res.status(200).json({ message: 'post to favorite movies', id, movieID });
+};
+
+/**
+ * @desc remove movie from favorites list
+ * @route DELETE /api/users/movies/:id
+ * @access private
+ */
+const removeFromFavorites = async (req, res) => {
+  // logic here
+  const { id, movieID } = req.params;
+
+  const user = await User.findOneAndUpdate(
+    { name: id },
+    { $pull: { favoriteMovies: movieID } }
+  ); // ! change later
+
+  res.status(200).json({ message: 'delete favorite movies', id, movieID });
+};
+
+module.exports = {
+  registerUser,
+  loginUser,
+  profile,
+  updateUser,
+  deleteUser,
+  addToFavorites,
+  removeFromFavorites,
+};
