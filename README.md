@@ -1,4 +1,4 @@
-# movie REST api
+# Arnold API :grin:
 
 ### Description
 
