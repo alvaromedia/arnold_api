@@ -9,4 +9,8 @@
 
 - Node.js
 - Express
-- MongoDB (..in progress)
+- MongoDB and mongoose
+
+#### Deployment
+
+[live demo](https://movierestapi-production.up.railway.app/) thanks to Railway
