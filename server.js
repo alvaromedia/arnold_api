@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const cors = require('cors');
+
 require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 
@@ -11,6 +13,9 @@ const path = require('path');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// CORS
+app.use(cors());
 
 // Create a write stream
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
