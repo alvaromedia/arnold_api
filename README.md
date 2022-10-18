@@ -13,4 +13,5 @@
 
 #### Deployment
 
-[live demo](https://movierestapi-production.up.railway.app/) thanks to Railway
+[Deployed](https://movierestapi-production.up.railway.app/) on Railway <br/>
+Also deployed on [heroku](https://chuache.herokuapp.com/) while free tier isn't removed
