@@ -9,11 +9,11 @@ const movieSchema = new mongoose.Schema({
   },
   genre: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Genres',
+    ref: 'Genre',
   },
   director: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Directors',
+    ref: 'Director',
   },
   actors: {
     type: [{ type: String }],

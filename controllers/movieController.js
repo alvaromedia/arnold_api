@@ -8,7 +8,9 @@ const Movies = require('../models/movieModel');
  */
 const getAllMovies = async (req, res) => {
   try {
-    const allMovies = await Movies.find({});
+    const allMovies = await Movies.find({})
+      .populate('director')
+      .populate('genre');
     res.status(200).json(allMovies);
   } catch (error) {
     res.json({ error: error.message });
