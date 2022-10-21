@@ -30,8 +30,10 @@ const findMovie = async (req, res) => {
     return res.status(404).json({ error: 'Movie does not exist' });
   }
 
-  // Check if the workout exists
-  const singleMovie = await Movies.findOne({ _id: id });
+  // Check if the movie exists
+  const singleMovie = await Movies.findOne({ _id: id })
+    .populate('director')
+    .populate('genre');
   if (!singleMovie) {
     return res.status(404).json({ error: "Movie doesn't exist" });
   }
