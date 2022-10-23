@@ -59,7 +59,7 @@ const loginUser = async (req, res) => {
       }
     );
 
-    res.json({ message: 'Logged in successfully', token });
+    res.json({ message: 'Logged in successfully', user, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
