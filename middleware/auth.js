@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-// const User = require('../models/userModel'); // todo check later
+const User = require('../models/userModel');
 
 const protect = async (req, res, next) => {
   let token;
@@ -19,8 +19,8 @@ const protect = async (req, res, next) => {
       console.log(decoded); // ! delete later
 
       // Get user from the token (because the token has the user id as payload)
-      // req.user = await User.findById(decoded.payload_id).select('-password'); // todo: check later
-      req.user = decoded;
+      req.user = await User.findById(decoded.payload_id).select('-password');
+
       console.log(req.user); // ! delete later
 
       next();

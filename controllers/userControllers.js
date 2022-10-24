@@ -47,8 +47,9 @@ const loginUser = async (req, res) => {
       req.body.password,
       user.password
     );
+
     if (!validPassword) {
-      res.status(400).json({ error: 'Invalid password' });
+      throw new Error('Invalid password');
     }
 
     const token = jwt.sign(
@@ -71,10 +72,10 @@ const loginUser = async (req, res) => {
  * @access private
  */
 const profile = async (req, res) => {
-  const { id } = req.params; // ! change later
+  const { id } = req.params;
 
   try {
-    const user = await User.findOne({ name: id }); // ! change later
+    const user = await User.findById(id);
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -87,10 +88,10 @@ const profile = async (req, res) => {
  * @access private
  */
 const updateUser = async (req, res) => {
-  const { id } = req.params; // ! change later
+  const { id } = req.params;
 
   try {
-    const user = await User.findOne({ name: id }); // ! change later
+    const user = await User.findById(id);
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });

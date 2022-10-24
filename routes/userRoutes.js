@@ -10,15 +10,18 @@ const {
   removeFromFavorites,
 } = require('../controllers/userControllers');
 
+const protect = require('../middleware/auth');
+
 router.post('/', registerUser);
 router.post('/login', loginUser);
 
-router.get('/:id', profile);
-router.put('/:id', updateUser);
-router.delete('/:id', deleteUser);
+// protected routes
+router.get('/:id', protect, profile);
+router.put('/:id', protect, updateUser);
+router.delete('/:id', protect, deleteUser);
 
 // SUB routes for favorite movies
-router.post('/:id/movies/:movieID', addToFavorites);
-router.delete('/:id/movies/:movieID', removeFromFavorites);
+router.post('/:id/movies/:movieID', protect, addToFavorites);
+router.delete('/:id/movies/:movieID', protect, removeFromFavorites);
 
 module.exports = router;
