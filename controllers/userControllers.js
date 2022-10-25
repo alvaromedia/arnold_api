@@ -40,6 +40,7 @@ const loginUser = async (req, res) => {
   const user = await User.findOne({ name: req.body.name });
   if (!user) {
     return res.status(400).json({ error: 'User does not exist' });
+    // throw new Error('User does not exist');
   }
 
   try {

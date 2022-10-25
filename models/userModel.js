@@ -1,18 +1,18 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'Please add a name'],
+      required: [true, "Please add a name"],
       unique: true,
       trim: true,
       maxLength: 24,
-      minLength: 6,
+      minLength: 3,
     },
     email: {
       type: String,
-      required: [true, 'Please add an email'],
+      required: [true, "Please add an email"],
       unique: true,
       lowercase: true,
       trim: true,
@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, 'Please add a password'],
+      required: [true, "Please add a password"],
       maxLength: 512,
       minLength: 6,
     },
@@ -29,10 +29,10 @@ const userSchema = new mongoose.Schema(
       type: Date,
     },
     favoriteMovies: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movies' }],
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Movies" }],
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);
